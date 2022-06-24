@@ -1,0 +1,36 @@
+services:
+  nginx:
+    image: alpine-nginx-42
+    ports:
+      - "80:80"
+    networks:
+      - global
+    volumes:
+      - test:/test
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+  php:
+    image: alpine-php-42
+    networks:
+      - global
+    volumes:
+      - test:/test
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    restart: always
+  mariadb:
+    image: alpine-mariadb-42
+    networks:
+    - global
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    restart: always
+
+networks:
+  global: {}
+volumes:
+  test:
