@@ -4,7 +4,8 @@ services:
     ports:
       - "80:80"
     networks:
-      - global
+      global:
+        ipv4_address: 172.20.2.1
     volumes:
       - test:/test
     build:
@@ -14,7 +15,8 @@ services:
   php:
     image: alpine-php-42
     networks:
-      - global
+      global:
+        ipv4_address: 172.20.2.2
     volumes:
       - test:/test
     build:
@@ -24,13 +26,18 @@ services:
   mariadb:
     image: alpine-mariadb-42
     networks:
-    - global
+      global:
+        ipv4_address: 172.20.2.3
     build:
       context: ./mariadb
       dockerfile: Dockerfile
     restart: always
 
 networks:
-  global: {}
+  global:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.2.0/16"
 volumes:
   test:
