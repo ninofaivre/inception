@@ -1,5 +1,7 @@
 FROM alpine
-RUN apk add mariadb mariadb-client openrc
+RUN apk update && apk add --no-cache mariadb mariadb-client
 EXPOSE 3306
-COPY ./srcs/init.sh /
-CMD ./init.sh
+COPY ./srcs/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+COPY ./srcs/init.sh /srcs/init.sh
+ENTRYPOINT  ["/srcs/init.sh"]
+CMD ["mysqld_safe"]

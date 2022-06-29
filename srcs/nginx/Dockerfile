@@ -1,6 +1,7 @@
 FROM alpine
-RUN apk add nginx
+RUN apk update && apk add --no-cache nginx
 EXPOSE 80
-COPY ./srcs/init.sh /
-COPY ./srcs/default.conf /
-CMD ./init.sh
+COPY ./srcs/default.conf /etc/nginx/http.d/default.conf
+COPY ./srcs/init.sh /srcs/init.sh
+ENTRYPOINT ["/srcs/init.sh"]
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,6 +1,32 @@
 version: '3.7'
 services:
+  mariadb:
+    image: alpine-mariadb-42
+    networks:
+      global:
+        ipv4_address: 172.20.2.3
+    volumes:
+      - wordpressDB:/volumes/wordpressDB
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    restart: always
+  php:
+    depends_on:
+      - mariadb
+    image: alpine-php-42
+    networks:
+      global:
+        ipv4_address: 172.20.2.2
+    volumes:
+      - wordpressFiles:/volumes/wordpressFiles
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    restart: always
   nginx:
+    depends_on:
+      - php
     image: alpine-nginx-42
     ports:
       - "80:80"
@@ -8,29 +34,9 @@ services:
       global:
         ipv4_address: 172.20.2.1
     volumes:
-      - test:/test
+      - wordpressFiles:/volumes/wordpressFiles
     build:
       context: ./nginx
-      dockerfile: Dockerfile
-    restart: always
-  php:
-    image: alpine-php-42
-    networks:
-      global:
-        ipv4_address: 172.20.2.2
-    volumes:
-      - test:/test
-    build:
-      context: ./php
-      dockerfile: Dockerfile
-    restart: always
-  mariadb:
-    image: alpine-mariadb-42
-    networks:
-      global:
-        ipv4_address: 172.20.2.3
-    build:
-      context: ./mariadb
       dockerfile: Dockerfile
     restart: always
 
@@ -39,5 +45,7 @@ networks:
     ipam:
       config:
         - subnet: "172.20.2.0/16"
+
 volumes:
-  test:
+  wordpressFiles:
+  wordpressDB:
