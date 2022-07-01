@@ -26,6 +26,7 @@ services:
       - WordpressDBName
       - WordpressDBUser
       - WordpressDBPass
+      - WP_CLI_CONFIG_PATH
     build:
       context: ./php
     restart: always
