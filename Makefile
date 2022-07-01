@@ -4,12 +4,15 @@ all:
 	sudo docker compose -f ./srcs/docker-compose.yaml build
 
 start:
-	sudo docker compose -f ./srcs/docker-compose.yaml up -d
+	sudo docker compose --project-directory ./srcs up -d
+
+start-log:
+	sudo docker compose --project-directory ./srcs up
 
 stop:
 	sudo docker compose -f ./srcs/docker-compose.yaml down
 
-re: all stop start
+re: reset all
 
 ps:
 	sudo docker compose -f ./srcs/docker-compose.yaml ps
