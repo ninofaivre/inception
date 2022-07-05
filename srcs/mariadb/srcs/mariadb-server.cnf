@@ -23,7 +23,7 @@ user=mysql
 #
 # Allow server to accept connections on all interfaces.
 #
-bind-address=0.0.0.0
+bind-address=mariadb
 #
 # Optional setting
 #wsrep_slave_threads=1

@@ -2,8 +2,9 @@ version: '3.7'
 services:
   mariadb:
     image: alpine-mariadb-42
+    container_name: "mariadb"
     networks:
-      - global
+      - inception
     volumes:
       - wordpressDB:/volumes/wordpressDB
     environment:
@@ -15,11 +16,10 @@ services:
       context: ./mariadb
     restart: always
   php:
-    depends_on:
-      - mariadb
     image: alpine-php-42
+    container_name: "php"
     networks:
-      - global
+      - inception
     volumes:
       - wordpressFiles:/volumes/wordpressFiles
     environment:
@@ -31,13 +31,12 @@ services:
       context: ./php
     restart: always
   nginx:
-    depends_on:
-      - php
     image: alpine-nginx-42
+    container_name: "nginx"
     ports:
       - "443:443"
     networks:
-      - global
+      - inception
     volumes:
       - wordpressFiles:/volumes/wordpressFiles
     build:
@@ -45,7 +44,8 @@ services:
     restart: always
 
 networks:
-  global:
+  inception:
+    name: "inception"
 
 volumes:
   wordpressFiles:
