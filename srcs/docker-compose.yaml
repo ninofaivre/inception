@@ -18,6 +18,8 @@ services:
   php:
     image: alpine-php-42
     container_name: "php"
+    depends_on:
+      - mariadb
     networks:
       - inception
     volumes:
@@ -26,6 +28,10 @@ services:
       - WordpressDBName
       - WordpressDBUser
       - WordpressDBPass
+      - WordpressSiteTitle
+      - WordpressAdminUser
+      - WordpressAdminPassword
+      - WordpressAdminEmail
       - WP_CLI_CONFIG_PATH
     build:
       context: ./php
@@ -33,6 +39,8 @@ services:
   nginx:
     image: alpine-nginx-42
     container_name: "nginx"
+    depends_on:
+      - php
     ports:
       - "443:443"
     networks:
@@ -49,4 +57,16 @@ networks:
 
 volumes:
   wordpressFiles:
+    name: "wordpressFiles"
+    driver: local
+    driver_opts:
+      device: /home/$LOGIN/data/wordpressFiles
+      type: volume
+      o : bind
   wordpressDB:
+    name: "wordpressDB"
+    driver: local
+    driver_opts:
+      device: /home/$LOGIN/data/wordpressDB
+      type: volume
+      o: bind

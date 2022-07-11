@@ -1,5 +1,5 @@
 FROM alpine
-RUN apk update && apk add --no-cache php8 php8-fpm php8-opcache php8-gd php8-mysqli php8-phar wget mariadb-client
+RUN apk update && apk add --no-cache php8 php8-fpm php8-opcache php8-gd php8-mysqli php8-phar php8-iconv wget mariadb-client
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp && chmod +x /usr/local/bin/wp
 COPY ./srcs/config.yml /etc/wp-cli/config.yml
 COPY ./srcs/init.sh /srcs/init.sh
