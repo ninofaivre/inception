@@ -5,13 +5,13 @@ all:
 	mkdir -p /home/${LOGIN}/data
 	mkdir -p /home/${LOGIN}/data/wordpressFiles
 	mkdir -p /home/${LOGIN}/data/wordpressDB
-	docker compose --project-directory ./srcs build
+	docker-compose --project-directory ./srcs build
 
 start:
-	docker compose --project-directory ./srcs up --no-build -d
+	docker-compose --project-directory ./srcs up --no-build -d
 
 stop:
-	docker compose --project-directory ./srcs down
+	docker-compose --project-directory ./srcs down
 
 re: reset all
 
