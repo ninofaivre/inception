@@ -8,7 +8,7 @@ fi
 /usr/share/mariadb/mysql.server start
 mysql -u root -p"$MariaDBRootPassword" -Bse "
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$MariaDBRootPassword';
-CREATE DATABASE IF NOT EXISTS wordpress;
+CREATE DATABASE IF NOT EXISTS $WordpressDBName;
 GRANT ALL PRIVILEGES ON $WordpressDBName.* TO '$WordpressDBUser'@'php.inception' IDENTIFIED BY '$WordpressDBPass';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
 FLUSH PRIVILEGES;"
