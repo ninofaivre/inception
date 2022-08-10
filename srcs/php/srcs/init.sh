@@ -17,6 +17,8 @@ if ! wp core is-installed 1>&2 2>/dev/null; then
 	wp core install --url="localhost" --title="$WORDPRESS_SITE_TITLE" --admin_user="$WORDPRESS_ADMIN_USER" --admin_password="$WORDPRESS_ADMIN_PASSWORD" --admin_email="$WORDPRESS_ADMIN_EMAIL" --skip-email
 fi
 
+wget https://www.adminer.org/latest-mysql-en.php -O /volumes/wordpressFiles/adminer.php
+
 sed "s/listen = 127.0.0.1:9000/listen = php:9000/" -i /etc/php8/php-fpm.d/www.conf
 sed "s/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = $(ping nginx -c 1 -s 0 | awk 'NR==2 { print substr($4, 1, length($4) - 1) ; exit }')/" -i /etc/php8/php-fpm.d/www.conf
 
