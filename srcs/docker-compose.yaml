@@ -8,10 +8,10 @@ services:
     volumes:
       - wordpressDB:/volumes/wordpressDB
     environment:
-      - WordpressDBName
-      - WordpressDBUser
-      - WordpressDBPass
-      - MariaDBRootPassword
+      - WORDPRESS_DB_NAME
+      - WORDPRESS_DB_USER
+      - WORDPRESS_DB_PASS
+      - MARIADB_ROOT_PASSWORD
     build:
       context: ./mariadb
     restart: always
@@ -25,13 +25,13 @@ services:
     volumes:
       - wordpressFiles:/volumes/wordpressFiles
     environment:
-      - WordpressDBName
-      - WordpressDBUser
-      - WordpressDBPass
-      - WordpressSiteTitle
-      - WordpressAdminUser
-      - WordpressAdminPassword
-      - WordpressAdminEmail
+      - WORDPRESS_DB_NAME
+      - WORDPRESS_DB_USER
+      - WORDPRESS_DB_PASS
+      - WORDPRESS_SITE_TITLE
+      - WORDPRESS_ADMIN_USER
+      - WORDPRESS_ADMIN_PASSWORD
+      - WORDPRESS_ADMIN_EMAIL
       - WP_CLI_CONFIG_PATH
     build:
       context: ./php

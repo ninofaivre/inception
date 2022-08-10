@@ -10,6 +10,9 @@ all:
 start:
 	docker-compose --project-directory ./srcs up --no-build -d
 
+start-no-detach:
+	docker-compose --project-directory ./srcs up --no-build
+
 stop:
 	docker-compose --project-directory ./srcs down
 
